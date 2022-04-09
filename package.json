@@ -1,0 +1,32 @@
+{
+  "name": "movie-crud",
+  "version": "1.0.0",
+  "description": "Restful API's with Node, Express and Postgresql",
+  "main": "./src/app.js",
+  "license": "MIT",
+  "scripts": {
+    "dev": "nodemon --exec babel-node -r dotenv/config ./src/app.js",
+    "lint": "eslint \"**/*.js\" --fix",
+    "prepush": "npm run lint",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@babel/core": "^7.17.9",
+    "@babel/node": "^7.16.8",
+    "@babel/preset-env": "^7.16.11",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3",
+    "express-promise-router": "^4.1.1",
+    "pg": "^8.7.3"
+  },
+  "devDependencies": {
+    "eslint": "^7.32.0",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^5.2.0",
+    "husky": "^7.0.4",
+    "nodemon": "^2.0.15"
+  }
+}
