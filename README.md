@@ -16,7 +16,7 @@
 7. npm run test - to test the application
 8. npm run lint - to fix the linting errors
 
-## API's exposed
+API's exposed
 1. POST: /api/movies    - To insert a movie. Sample request body: 
         {
             "title": "Wrong Turn",
