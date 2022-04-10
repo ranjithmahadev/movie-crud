@@ -11,6 +11,6 @@
         d. DB_PASSWORD
         e. DB_PORT
         f. PORT
-5. Ensure postgres is installed in your system
+5. Ensure postgres is installed and configured in your system
 6. npm run dev - to run the application
 7. npm run test - to test the application
