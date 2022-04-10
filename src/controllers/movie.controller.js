@@ -1,4 +1,5 @@
 import db from '../config/db';
+import movieSchemaValidation from '../utils/movie.schema';
 
 /**
  * Controller to insert a new movie
@@ -8,10 +9,15 @@ import db from '../config/db';
  * @returns {Object}
  */
 exports.addMovie = async (req, res) => {
-  const { title, year, actors, description } = req.body;
   try {
+    // validate schema
+    const { error } = movieSchemaValidation.validateMovie(req.body);
+    if (error) return res.status(400).send({ message: error });
+
+    const { title, year, actors, description } = req.body;
+
     await db.query('INSERT INTO movie (title, year, actors, description) VALUES ($1, $2, $3, $4) RETURNING *', [title, year, actors, description]);
-    res.status(201).send({ message: 'Added a new movie' });
+    res.status(201).send({ message: 'Successfully added a new movie' });
   } catch (err) {
     return res.status(401).json({ message: err.message });
   }
@@ -50,7 +56,7 @@ exports.findMovieById = async (req, res) => {
     const id = parseInt(req.params.id);
     const { rows } = await db.query('SELECT * from movie WHERE id = $1', [id]);
     if (rows.length === 0) {
-      res.status(404).json({ message: 'No movies found' });
+      res.status(404).json({ message: `No movie found for id ${id}` });
     } else {
       res.status(200).send(rows);
     }
@@ -68,11 +74,15 @@ exports.findMovieById = async (req, res) => {
  */
 exports.updateMovieById = async (req, res) => {
   try {
+    // validate schema
+    const { error } = movieSchemaValidation.validateMovie(req.body);
+    if (error) return res.status(400).send({ message: error });
+
     const id = parseInt(req.params.id);
     const { title, year, actors, description } = req.body;
     const { rowCount } = await db.query('Update movie SET title = $1, year = $2, actors = $3, description = $4 WHERE id = $5', [title, year, actors, description, id]);
     if (rowCount === 0) {
-      res.status(404).send({ message: `No movies found for id ${id}` });
+      res.status(404).send({ message: `No movie found for id ${id}` });
     } else {
       res.status(200).send({ message: 'Movie updated successfully' });
     }
@@ -93,7 +103,7 @@ exports.deleteMovieById = async (req, res) => {
     const id = parseInt(req.params.id);
     const { rowCount } = await db.query('DELETE FROM movie WHERE id = $1', [id]);
     if (rowCount === 0) {
-      res.status(404).send({ message: `No movies found for id ${id}` });
+      res.status(404).send({ message: `No movie found for id ${id}` });
     } else {
       res.status(200).send({ message: 'Movie deleted successfully' });
     }

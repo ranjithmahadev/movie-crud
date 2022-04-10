@@ -6,7 +6,6 @@
 
 import express from 'express';
 import cors from 'cors';
-// eslint-disable-next-line import/named
 import { pool } from './config/db';
 import movieRoute from './routes/movie.routes';
 
@@ -36,3 +35,5 @@ pool.connect((err) => {
     console.log(`Server is listening on port ${PORT}`);
   });
 });
+
+module.exports = app;
